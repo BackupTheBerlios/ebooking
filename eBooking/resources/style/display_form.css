@@ -1,0 +1,64 @@
+/**
+ * @author Roman R&auml;dle
+ * @version $Id: display_form.css,v 1.1 2005/10/16 18:27:00 raedler Exp $
+ * @since DAPS INTRA 1.0
+ */
+
+table.form {
+  background-color: #FFEFAF;
+  border: 1px solid #9F9F9F;
+  border-top: none;
+  margin: 0px 0px 0px 0px;
+  display: block;
+  width: 100%;
+  spacing: 0px 0px 0px 0px;
+  padding: 10px 10px 10px 10px;
+}
+tr.form {
+  height: 20px;
+  border: 0px;
+}
+td.form {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+
+input, select {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+}
+input.button {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  background-color: #FFA03C;
+  border-color: #f8f8f8;
+  color: #000000;
+}
+button {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  background-color: #f8f8f8;
+  border-color: #f8f8f8;
+  color: #000000;
+}
+.form {
+  margin: 20px 20px 20px 20px;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 11px;
+}
+.form_input {
+  width: 200px;
+}
+.form_select {
+  width: 200px;
+  height: 18px;
+}
+input.form_button {
+  margin: 0px 0px 0px 20px;
+  width: 130px;
+  background-color: #f8f8f8;
+  border-color: #f8f8f8;
+  color: #000000;
+}

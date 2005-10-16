@@ -1,0 +1,258 @@
+/**
+ * @author Roman R&auml;dle
+ * @version $Id: display_data_table.css,v 1.1 2005/10/16 18:27:00 raedler Exp $
+ * @since DAPS INTRA 1.0
+ */
+
+body {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
+}
+
+img {
+  border: none;
+}
+
+/* *************************************************
+ * DATA TABLE DEFINITIONS
+ */
+table.data_table {
+  border: 1px solid #9F9F9F;
+  border-collapse: collapse;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  /*border: 0px;*/
+  width: 100%;
+  margin: 0px 0px 0px 0px;
+}
+/* ************************************************* */
+
+/* *************************************************
+ * DATA TABLE PAGE BANNER DEFINITIONS
+ */
+a.pagelinks:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+a.pagelinks {
+  color: #000000;
+  text-decoration: none;
+}
+
+span.pagebanner {
+  background-color: #EFEFEF;
+  border: 1px solid #9F9F9F;
+  padding: 2px 4px 2px 4px;
+  margin: 30px 0px 0px 0px;
+  width: 100%;
+  display: block;
+  border-bottom: none;
+}
+
+span.pagelinks {
+  height: 20px;
+  background-color: #EFEFEF;
+  border: 1px solid #9F9F9F;
+  padding: 2px 4px 2px 4px;
+  margin: 0px 0px 20px 0px;
+  width: 100%;
+  display: block;
+  border-top: none;
+}
+/* ************************************************* */
+
+/* *************************************************
+ * DATA TABLE FILTER INPUT DEFINITIONS
+ */
+tr.data_table_filter_input {
+  background-color: #FFCF0F;
+  text-algin: top;
+  height: 20px;
+}
+tr.data_table_filter_input td {
+  margin: 2px 2px 2px 2px;
+  padding: 2px 2px 2px 2px;
+}
+tr.data_table_filter_input input {
+  font-size: 11px;
+}
+
+/* *************************************************
+ * DATA TABLE HEADER DEFINITIONS
+ */
+thead {
+  /*height: 20px;*/
+}
+thead tr {
+    background-color: #FFCF0F;
+}
+
+/*
+table tbody {
+  height: 100px;
+  max-height: 200px;
+  overflow: auto;
+}
+*/
+
+th {
+  padding: 2px 4px 2px 4px;
+  text-align: left;
+  vertical-align: center;
+}
+
+th a, th a:visited {
+  text-decoration: none;
+  color: black;
+}
+th a, th a:visited {
+  text-decoration: none;
+  color: black;
+}
+th a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+th.sorted {
+  background-position: right;
+  background-color: FFCF0F;
+  display: block;
+}
+th.sortable a {
+  background-position: right;
+  background-repeat: no-repeat;
+  background-image: url(../images/arrow_off.png);
+  display: block;
+}
+th.order1 a {
+  background-position: right;
+  background-repeat: no-repeat;
+  background-image: url(../images/arrow_down.png);
+  display: block;
+}
+th.order2 a {
+  background-position: right;
+  background-repeat: no-repeat;
+  background-image: url(../images/arrow_up.png);
+  display: block;
+}
+/* ************************************************* */
+
+/* *************************************************
+ * DATA TABLE DATA DEFINITIONS
+ */
+td {
+  padding: 0px 2px 0px 2px;
+  text-align: left;
+  vertical-align: center;
+}
+
+td.data_table_icon {
+  text-align: center;
+  width: 30px;
+}
+tr.odd {
+  background-color: #FFFFFF;
+}
+tr.even {
+  background-color: #FFEFAF;
+}
+/* ************************************************* */
+
+/* *************************************************
+ * DATA TABLE EXTENSIBLE MENU
+ */
+table.data_table_extensible_menu {
+  background-color: #EFEFEF;
+  border: 1px solid #9F9F9F;
+  padding: 2px 4px 2px 4px;
+  margin: 0px 0px 0px 0px;
+  width: 100%;
+  display: block;
+
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+}
+select.data_table_extensible_menu {
+  font-size: 11px;
+}
+/* ************************************************* */
+
+
+
+table.report td, table.report th{
+  font:         menu;
+}
+table.report th{
+  background:   buttonface;
+  border-width: 1px;
+  border-style: solid;
+  border-color: threedhighlight threedshadow threedshadow threedhighlight;
+  cursor:       hand;
+}
+table.report idcol {
+  background: buttonface;
+}
+
+table.report tr.even{
+  background-color: #399;
+}
+table.report tbody {
+  height: 100px;
+  overflow: auto;
+}
+
+table.report {
+  height: 120px;
+  overflow: auto;
+}
+
+table.report tbody tr{
+  height: 10px;
+}
+
+div.exportlinks {
+  background-color: #eee;
+  border: 1px solid #999;
+  padding: 2px 4px 2px 4px;
+  margin: 20px 0px 10px 0px;
+  width: 100%;
+}
+
+span.export {
+  padding: 0 4px 1px 20px;
+  display:inline; display:inline-block;
+  cursor: pointer;
+}
+
+span.excel {
+  background-repeat: no-repeat;
+  background-image: url(../images/ico_file_excel.png);
+}
+span.csv {
+  background-repeat: no-repeat;
+  background-image: url(../images/ico_file_csv.png);
+}
+span.xml {
+  background-repeat: no-repeat;
+  background-image: url(../images/ico_file_xml.png);
+}
+span.pdf {
+  background-repeat: no-repeat;
+  background-image: url(../images/ico_file_pdf.png);
+}
+
+
+
+table tr td.data_table_filter_empty_row_light {
+  height: 4px;
+  background-color: #FFFFFF;
+}
+table tr td.data_table_filter_empty_row_dark {
+  height: 4px;
+  background-color: #FFCF0F;
+}

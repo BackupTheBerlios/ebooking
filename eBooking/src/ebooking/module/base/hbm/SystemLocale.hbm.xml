@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: SystemLocale.hbm.xml,v 1.1 2005/10/16 18:27:12 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+    <class name="ebooking.module.base.bean.system.SystemLocale" table="BASE_SYSTEM_LOCALE">
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/> 
+            <generator class="increment"/>
+        </id>
+
+        <property name="key" type="string" unique="true">
+            <column name="LOCALE_KEY" not-null="true"/>
+        </property>
+
+        <property name="language" type="string">
+            <column name="LANGUAGE" not-null="true"/>
+        </property>
+
+        <property name="countryName" type="string">
+            <column name="COUNTRY_NAME" not-null="true"/>
+        </property>
+
+        <set name="titles" table="BASE_SYSTEM_TITLE" inverse="true" cascade="all" lazy="true" sort="ebooking.core.hibernate.sort.NameComparator">
+            <key column="SYSTEM_LOCALE_KEY" property-ref="key"/>
+            <one-to-many class="ebooking.module.base.bean.system.Title"/>
+        </set>
+
+        <set name="academicTitles" table="BASE_SYSTEM_ACADEMIC_TITLE" inverse="true" cascade="all" lazy="true" sort="ebooking.core.hibernate.sort.NameComparator">
+            <key column="SYSTEM_LOCALE_KEY" property-ref="key"/>
+            <one-to-many class="ebooking.module.base.bean.system.AcademicTitle"/>
+        </set>
+
+        <set name="countries" table="BASE_SYSTEM_COUNTRY" inverse="true" cascade="all" lazy="true" sort="ebooking.core.hibernate.sort.NameComparator">
+            <key column="SYSTEM_LOCALE_KEY" property-ref="key"/>
+            <one-to-many class="ebooking.module.base.bean.system.Country"/>
+        </set>
+    </class>
+</hibernate-mapping>

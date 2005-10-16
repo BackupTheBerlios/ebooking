@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: BookingItem.hbm.xml,v 1.1 2005/10/16 18:27:16 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+
+    <class name="ebooking.module.booking.bean.BookingItem" table="BOOKING_ITEM">
+
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="fromDate" type="date">
+            <column name="FROM_DATE" not-null="true"/>
+        </property>
+
+        <property name="toDate" type="date">
+            <column name="TO_DATE" not-null="true"/>
+        </property>
+
+        <property name="amount" type="float">
+            <column name="AMOUNT" not-null="true"/>
+        </property>
+
+        <many-to-one name="unit" column="UNIT_ID" class="ebooking.module.base.bean.system.Unit" cascade="save-update"/>
+
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="4000"/> 
+        </property>
+
+        <property name="price" type="float">
+            <column name="PRICE" not-null="true"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

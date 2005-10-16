@@ -1,0 +1,17 @@
+"ID";"TITLE_KEY";"ACADEMIC_TITLE_KEY";"FIRSTNAME";"LASTNAME";"IDENTIFICATION_NUMBER";"ADDRESS_ID"
+2;"mrs";"empty";"Stefanie";"Rädle";"0000-0000-0000-0000";2
+3;"mr";"empty";"Thomas";"Rädle";NULL;3
+4;"miss";"empty";"Kathrin";"Rochow";NULL;4
+5;"mr";"empty";"Roman";"Rädle";"XXXX-XXXX-XXXX-XXXX";5
+7;"mr";"empty";"Markus";"Rädle";NULL;7
+8;"mr";"prof. dr.";"Daniel A.";"Keim";"XXXX-XXXX-XXXX-XXXX";9
+9;"mr";"empty";"Anton";"Rädle";NULL;10
+10;"firm";"empty";"Anton";"Rädle";NULL;11
+12;"mr";"empty";"Paul";"Jakuszczonek";NULL;13
+13;"mrs";"empty";"Susanne";"Rauh";NULL;14
+14;"mr";"empty";"Andreas";"Weiler";"";15
+15;"mr";"empty";"Domenic";"Winkler";NULL;16
+16;"mrs";"empty";"Cordula";"Bauer";NULL;17
+17;"mrs";"empty";"Andrea";"Söter";NULL;18
+18;"mr";"empty";"Jürgen";"Denzel";NULL;19
+19;"empty";"empty";"asdf";"asdf";"";20

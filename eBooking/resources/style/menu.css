@@ -1,0 +1,76 @@
+/**
+ * @author Roman R&auml;dle
+ * @version $Id: menu.css,v 1.1 2005/10/16 18:27:00 raedler Exp $
+ * @since DAPS INTRA 1.0
+ */
+
+.menuBody {
+    background-color: #FFFFFF;
+    padding: 0px;
+    margin: 0px;
+}
+
+.menu {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.menuSelected {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #000000;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.menuItemHolder {
+    margin: 0px;
+    padding: 2px;
+}
+
+.menuItem {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #EFEFEF;
+    color: #000000;
+    cursor: pointer;
+    margin: 6px;
+    white-space: nowrap;
+}
+
+.menuItemSelected {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #000000;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin: 6px;
+    white-space: nowrap;
+}
+
+.notShownPopupMenu {
+    display: none;
+}
+
+.popupMenu {
+    border: 1px solid #000000;
+    background-color: #EFEFEF;
+    position: fixed;
+    display: box;
+    font-style: sans-serif;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.hiddenPopupMenu {
+    display: none;
+}

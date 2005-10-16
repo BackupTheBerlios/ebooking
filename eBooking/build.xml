@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: build.xml,v 1.1 2005/10/16 18:18:23 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<project name="eBooking" basedir="." default="schemaexport">
+
+    <property name="lib.dir" value="lib"/>
+    <property name="classes.dir" value="c:/programme/apache/tomcat/webapps/ebooking/WEB-INF/classes"/>
+
+    <path id="all-libs">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="schemaexport">
+        <taskdef name="schemaexport" classname="org.hibernate.tool.hbm2ddl.SchemaExportTask">
+            <classpath>
+                <path refid="all-libs"/>
+                <path location="${classes.dir}"/>
+            </classpath>
+        </taskdef>
+
+        <schemaexport properties="D:/Projects/eBooking/WEB-INF/classes/hibernate.properties" quiet="no" text="no" drop="no" delimiter=";" output="./db_data/schema-export.sql">
+            <fileset dir="src">
+                <include name="**/*.hbm.xml"/>
+            </fileset>
+        </schemaexport>
+
+    </target>
+
+</project>

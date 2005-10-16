@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: Booking.hbm.xml,v 1.1 2005/10/16 18:27:16 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+
+    <class name="ebooking.module.booking.bean.Booking" table="BOOKING">
+
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <many-to-one name="person" column="PERSON_ID" class="ebooking.module.base.bean.person.Person" cascade="save-update"/>
+
+        <set name="bookingItems" table="BOOKING_ITEM" inverse="true" cascade="none" lazy="true">
+            <key column="BOOKING_ID" not-null="true"/>
+            <one-to-many class="ebooking.module.booking.bean.BookingItem"/>
+        </set>
+
+    </class>
+    
+</hibernate-mapping>

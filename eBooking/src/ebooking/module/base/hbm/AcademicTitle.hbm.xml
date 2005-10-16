@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- 
+Author: Roman R&auml;dle
+Version: $Id: AcademicTitle.hbm.xml,v 1.1 2005/10/16 18:27:11 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+    <class name="ebooking.module.base.bean.system.AcademicTitle" table="BASE_SYSTEM_ACADEMIC_TITLE">
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="key" type="string">
+            <column name="ACADEMIC_TITLE_KEY" length="100" not-null="true"/>
+        </property>
+
+        <property name="name" type="string">
+            <column name="NAME" length="100" not-null="true"/>
+        </property>
+
+        <many-to-one name="systemLocale" column="SYSTEM_LOCALE_KEY" property-ref="key" class="ebooking.module.base.bean.system.SystemLocale" not-null="true"/>
+    </class>
+</hibernate-mapping>

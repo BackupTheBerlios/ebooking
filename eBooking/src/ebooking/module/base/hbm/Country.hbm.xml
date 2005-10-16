@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: Country.hbm.xml,v 1.1 2005/10/16 18:27:12 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+    <class name="ebooking.module.base.bean.system.Country" table="BASE_SYSTEM_COUNTRY">
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="key" type="string">
+            <column name="COUNTRY_KEY" length="100" not-null="true"/>
+        </property>
+
+        <property name="name" type="string">
+            <column name="NAME" length="100" not-null="true"/>
+        </property>
+
+        <many-to-one name="systemLocale" column="SYSTEM_LOCALE_KEY" property-ref="key" class="ebooking.module.base.bean.system.SystemLocale" not-null="true"/>
+
+        <set name="counties" table="BASE_ADDRESS_COUNTY" inverse="true" cascade="all" lazy="true" sort="ebooking.core.hibernate.sort.NameComparator">
+            <key column="COUNTRY_ID"/>
+            <one-to-many class="ebooking.module.base.bean.system.County"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

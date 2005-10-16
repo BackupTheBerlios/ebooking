@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: Address.hbm.xml,v 1.1 2005/10/16 18:27:12 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+    <class name="ebooking.module.base.bean.address.Address" table="BASE_ADDRESS">
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="street" type="string">
+            <column name="STREET" length="100" not-null="false"/>
+        </property>
+
+        <property name="zipCode" type="string">
+            <column name="ZIPCODE" length="25" not-null="false"/>
+        </property>
+
+        <property name="city" type="string">
+            <column name="CITY" length="100" not-null="false"/>
+        </property>
+
+        <property name="countyKey" type="string">
+            <column name="COUNTY_KEY" length="100" not-null="false"/>
+        </property>
+
+        <property name="countryKey" type="string">
+            <column name="COUNTRY_KEY" length="100" not-null="false"/>
+        </property>
+
+        <property name="postalName" type="string">
+            <column name="POSTAL_NAME" length="100" not-null="false"/>
+        </property>
+
+        <property name="department" type="string">
+            <column name="DEPARTMENT" length="150" not-null="false"/>
+        </property>
+
+        <property name="phone1" type="string">
+            <column name="PHONE1" length="100" not-null="false"/>
+        </property>
+
+        <property name="phone2" type="string">
+            <column name="PHONE2" length="100" not-null="false"/>
+        </property>
+
+        <property name="telefax" type="string">
+            <column name="FAX" length="100" not-null="false"/>
+        </property>
+
+        <property name="mobilePhone" type="string">
+            <column name="MOBILE_PHONE" length="100" not-null="false"/>
+        </property>
+
+        <property name="email" type="string">
+            <column name="EMAIL" length="100" not-null="false"/>
+        </property>
+
+        <property name="www" type="string">
+            <column name="WWW" length="150" not-null="false"/>
+        </property>
+
+        <set name="persons" table="BASE_PERSON" inverse="true" cascade="save-update" lazy="true">
+            <key column="ADDRESS_ID"/>
+            <one-to-many class="ebooking.module.base.bean.person.Person"/>
+        </set>
+    </class>
+</hibernate-mapping>

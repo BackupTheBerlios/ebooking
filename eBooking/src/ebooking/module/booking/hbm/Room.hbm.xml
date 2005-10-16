@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: Room.hbm.xml,v 1.1 2005/10/16 18:27:16 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+
+    <class name="ebooking.module.booking.bean.system.Room" table="BOOKING_SYSTEM_ROOM">
+
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="key" type="string">
+            <column name="ROOM_KEY" length="50" not-null="true"/>
+        </property>
+
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="4000" not-null="true"/>
+        </property>
+
+        <property name="price" type="float">
+            <column name="PRICE" not-null="true"/>
+        </property>
+
+        <set name="types" table="BOOKING_SYSTEM_ROOM_TO_ROOM_TYPE" inverse="false" cascade="none" lazy="true">
+            <key column="ROOM_ID" not-null="true"/>
+            <many-to-many class="ebooking.module.booking.bean.system.RoomType" column="ROOM_TYPE_ID"/>
+        </set>
+
+        <property name="bedAmount" type="integer">
+            <column name="BED_AMOUNT" not-null="true"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>
