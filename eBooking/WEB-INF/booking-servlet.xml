@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: booking-servlet.xml,v 1.1 2005/10/16 18:27:19 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<beans>
+
+    <!-- ============================================ BEGIN DAO SUPPORT ============================================ -->
+    <bean id="bookingDao" class="ebooking.module.booking.dao.support.BookingDaoSupport">
+        <property name="hibernateTemplate">
+            <ref bean="hibernateTemplate"/>
+        </property>
+    </bean>
+    <!-- ============================================= END DAO SUPPORT ============================================= -->
+
+    <!-- ========================================== BEGIN SERVICE SUPPORT ========================================== -->
+    <bean id="bookingServiceTarget" class="ebooking.module.booking.service.support.BookingServiceSupport">
+        <property name="bookingDao">
+            <ref bean="bookingDao"/>
+        </property>
+    </bean>
+
+    <bean id="bookingService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+            <ref bean="bookingServiceTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="saveOrUpdate*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- =========================================== END SERVICE SUPPORT =========================================== -->
+
+    <!-- =================================== BEGIN TRANSACTION MANAGER DEFINITION ================================== -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    <!-- ==================================== END TRANSACTION MANAGER DEFINITION =================================== -->
+
+    <!-- ======================================= BEGIN URL MAPPING DEFINITION ====================================== -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="securityInterceptor"/>
+                <ref bean="openSessionInViewInterceptor"/>
+                <ref bean="localeChangeInterceptor"/>
+                <ref bean="themeChangeInterceptor"/>
+            </list>
+        </property>
+        <property name="urlMap">
+            <map>
+                <entry key="/add_room.jspa"><ref local="manageRoomFormController"/></entry>
+
+                <entry key="/list_booking.jspa"><ref local="bookingFormController"/></entry>
+
+                <entry key="/*_booking*.jspa"><ref local="manageBookingFormController"/></entry>
+                <!--
+                <entry key="/edit_booking.jspa"><ref local="manageBookingFormController"/></entry>
+                -->
+                <entry key="/delete_booking.jspa"><ref local="bookingFormController"/></entry>
+            </map>
+        </property>
+    </bean>
+    <!-- ======================================== END URL MAPPING DEFINITION ======================================= -->
+
+    <!-- ========================================== BEGIN CONTROLLER SETUP ========================================= -->
+    <bean id="manageRoomFormController" class="ebooking.module.booking.form.ManageRoomForm">
+        <property name="sessionForm"><value>true</value></property>
+    </bean>
+
+    <bean id="manageBookingFormController" class="ebooking.module.booking.form.ManageBookingController">
+        <!--
+        <property name="bookingService"><ref bean="bookingService"/></property>
+        -->
+        <property name="sessionForm"><value>true</value></property>
+        <!--
+        <property name="commandName"><value>systemLocale</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.system.SystemLocaleCommand</value></property>
+        <property name="validator"><ref bean="validatorAdpater"/></property>
+        -->
+    </bean>
+
+    <bean id="bookingFormController" class="ebooking.module.booking.controller.BookingController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/></property>
+        <property name="bookingService"><ref bean="bookingService"/></property>
+    </bean>
+    <!-- =========================================== END CONTROLLER SETUP ========================================== -->
+
+    <!-- ======================================= BEGIN METHOD NAME RESOLVER ======================================== -->
+    <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/list_booking.jspa">listBookingsForm</prop>
+                <prop key="/delete_booking.jspa">deleteBookingForm</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- ========================================= END METHOD NAME RESOLVER ======================================== -->
+
+    <!-- ====================================== BEGIN VIEW RESOLVER DEFINITION ===================================== -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/WEB-INF/module/booking/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+    <!-- ======================================= END VIEW RESOLVER DEFINITION ====================================== -->
+
+</beans>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: applicationContext.xml,v 1.1 2005/10/16 18:27:17 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<beans>
+
+    <!-- ======================================== BEGIN PROPERTY CONFIGURER ======================================== -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/context.properties</value>
+                <value>/WEB-INF/classes/hibernate.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- ========================================= END PROPERTY CONFIGURER ========================================= -->
+
+    <!-- =========================================== BEGIN MESSAGE BUNDLE ========================================== -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>/messages/de/generally_de</value>
+                <value>/messages/de/command_de</value>
+                <value>/messages/de/form_de</value>
+                <value>/messages/de/menu_de</value>
+            </list>
+        </property>
+    </bean>
+    <!-- ============================================ END MESSAGE BUNDLE =========================================== -->
+
+    <!-- ========================================= BEGIN MIGRATION UPDATER ========================================= -->
+    <!-- LAEUFT IM MOMENT NUR AUF HIBERNATE2
+    <bean id="migrationUpdater" class="wilken.openshop.tools.migration.MigrationUpdater">
+        <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+        <property name="modulesPath"><value>WEB-INF/module</value></property>
+        <property name="migrationFilePrefix"><value>migration_0_0</value></property>
+        <property name="stmtSeparator"><value>;</value></property>
+    </bean>
+    -->
+    <!-- ========================================== END MIGRATION UPDATER ========================================== -->
+
+    <!-- ================================ BEGIN HIBERNATE MAPPING DATABASE VALIDATOR =============================== -->
+    <!-- LAEUFT IM MOMENT NUR AUF HIBERNATE2
+    <bean id="hbmdbValidator" class="wilken.openshop.hibernate.validation.HbmDbValidator">
+        <property name="ddlOutputFile"><value>log/inconsistent_db.sql</value></property>
+        <property name="mappingResources"><value>${hibernate.mappings}</value></property>
+        <property name="dataSource"><ref bean="dataSource"/></property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
+                <prop key="hibernate.transaction.factory_class">${hibernate.transaction.factory_class}</prop>
+            </props>
+        </property>
+        <property name="path"><value></value></property>
+        <property name="createTableDDL"><value>true</value></property>
+        <property name="addColumnDDL"><value>true</value></property>
+    </bean>
+    -->
+    <!-- ================================= END HIBERNATE MAPPING DATABASE VALIDATOR ================================ -->
+
+    <!-- ===================================== BEGIN BEAN VALIDATOR DEFINITION ===================================== -->
+    <bean id="validatorAdpater" class="wilken.openshop.validation.ValidatorAdapter">
+        <property name="validationRulesXml">
+            <value>validation_rules.xml</value>
+        </property>
+        <property name="validatorXml">
+            <value>validators.xml</value>
+        </property>
+    </bean>
+    <!-- ====================================== END BEAN VALIDATOR DEFINITION ====================================== -->
+
+    <!-- ================================ BEGIN SESSION FACTORY BUILDING DEFINITION ================================ -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="mappingResources"><value>${hibernate.mappings}</value></property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.connection.driver_class">${hibernate.connection.driver_class}</prop>
+                <prop key="hibernate.connection.url">${hibernate.connection.url}</prop>
+                <prop key="hibernate.connection.username">${hibernate.connection.username}</prop>
+                <prop key="hibernate.connection.password">${hibernate.connection.password}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
+                <prop key="hibernate.cglib.use_reflection_optimizer">${hibernate.cglib.use_reflection_optimizer}</prop>
+            </props>
+        </property>
+        <property name="schemaUpdate"><value>false</value></property>
+    </bean>
+    <!-- ================================= END SESSION FACTORY BUILDING DEFINITION ================================= -->
+
+    <!-- =================================== BEGIN HIBERNATE TEMPLATE DEFINITION =================================== -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
+    </bean>
+    <!-- ==================================== END HIBERNATE TEMPLATE DEFINITION ==================================== -->
+
+    <!-- =================================== BEGIN TRANSACTION MANAGER DEFINITION ================================== -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
+    </bean>
+    <!-- ==================================== END TRANSACTION MANAGER DEFINITION =================================== -->
+
+    <!-- ====================================== BEGIN INTERCEPTORS DEFINITION ====================================== -->
+    <bean id="securityInterceptor" class="ebooking.core.security.SecurityInterceptor"/>
+
+    <bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
+        <property name="flushModeName"><value>FLUSH_AUTO</value></property>
+    </bean>
+
+    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+
+    <bean id="themeChangeInterceptor" class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
+    <!-- ======================================= END INTERCEPTORS DEFINITION ======================================= -->
+
+    <!-- ========================================= BEGIN EVENTS DEFINITION ========================================= -->
+    <!--
+    <bean id="eventPublisher" class="wilken.openshop.core.event.EventPublisher"/>
+    -->
+    <!-- ========================================== END EVENTS DEFINITION ========================================== -->
+
+    <!-- ======================================== BEGIN LISTENERS DEFINITION ======================================= -->
+    <!--
+    <bean id="loginListener" class="wilken.openshop.core.event.LoginListener">
+        <property name="mailSender"><ref bean="mailSender"/></property>
+        <property name="baseService"><ref bean="baseService"/></property>
+    </bean>
+
+    <bean id="logoutListener" class="wilken.openshop.core.event.LogoutListener">
+        <property name="mailSender"><ref bean="mailSender"/></property>
+        <property name="baseService"><ref bean="baseService"/></property>
+    </bean>
+
+    <bean id="SystemListener" class="wilken.openshop.core.event.SystemListener">
+        <property name="mailSender"><ref bean="mailSender"/></property>
+        <property name="baseService"><ref bean="baseService"/></property>
+    </bean>
+    -->
+    <!-- ========================================= END LISTENERS DEFINITION ======================================== -->
+
+
+    <!-- =================================== BEGIN LOAD AUTHORIZATIONS DEFINITION ================================== -->
+    <!--
+    <bean id="authorizationsRepository" class="wilken.openshop.core.security.AuthorizationItemsRepository">
+        <property name="baseService"><ref bean="baseService"/></property>
+    </bean>
+    -->
+    <!-- ==================================== END LOAD AUTHORIZATIONS DEFINITION =================================== -->
+
+    <!-- ================================ BEGIN MULTIPART ( FILEUPLOAD ) DEFINITIONS =============================== -->
+    <!--
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize"><value>100000</value></property>
+    </bean>
+    -->
+    <!-- ================================= END MULTIPART ( FILEUPLOAD ) DEFINITIONS ================================ -->
+
+</beans>

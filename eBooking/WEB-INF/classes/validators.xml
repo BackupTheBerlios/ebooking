@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators SYSTEM "http://www.openshop.de/dtds/validator.dtd">
+
+<validators>
+    <validator id="required" class="wilken.openshop.validation.validator.RequiredValidator"/>
+    <validator id="number" class="wilken.openshop.validation.validator.NumberValidator"/>
+    <validator id="string" class="wilken.openshop.validation.validator.StringValidator"/>
+    <validator id="regex" class="wilken.openshop.validation.validator.RegexValidator"/>
+    <validator id="email" class="wilken.openshop.validation.validator.EmailValidator"/>
+    <validator id="date" class="wilken.openshop.validation.validator.DateValidator"/>
+    <validator id="expression" class="wilken.openshop.validation.validator.ExpressionValidator"/>
+</validators>

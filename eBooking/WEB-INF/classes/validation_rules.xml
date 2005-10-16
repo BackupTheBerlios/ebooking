@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE validation-rules SYSTEM "http://www.openshop.de/dtds/validation_rule.dtd">
+
+<validation-rules>
+    <rule beanCommand="CustomerCommand">
+        <field>
+            <property id="firstname">
+                <validator id="required" msg-code="firstname.required" msg-default="Firstname is required."/>
+                <validator id="string" msg-code="firstname.invalid" msg-default="Invalid chars in the firstname."/>
+            </property>
+            <property id="lastname">
+                <validator id="required" msg-code="lastname.required" msg-default="Lastname is required."/>
+                <validator id="string" msg-code="lastname.invalid" msg-default="Invalid chars in the lastname."/>
+            </property>
+        </field>
+    </rule>
+
+    <rule beanCommand="TitleCommand">
+        <field>
+            <property id="name">
+                <validator id="required" msg-code="title.name.required" msg-default="Title name is required."/>  
+            </property>
+        </field>
+    </rule>
+</validation-rules>

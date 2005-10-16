@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: base-servlet.xml,v 1.1 2005/10/16 18:27:18 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<beans>
+
+    <!-- ============================================ BEGIN DAO SUPPORT ============================================ -->
+    <bean id="baseDao" class="ebooking.module.base.dao.support.BaseDaoSupport">
+        <property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+    </bean>
+    <!-- ============================================= END DAO SUPPORT ============================================= -->
+
+    <!-- ========================================== BEGIN SERVICE SUPPORT ========================================== -->
+    <bean id="baseServiceTarget" class="ebooking.module.base.service.support.BaseServiceSupport">
+        <property name="baseDao"><ref local="baseDao"/></property>
+    </bean>
+
+    <bean id="baseService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager"><ref bean="transactionManager"/></property>
+        <property name="target"><ref local="baseServiceTarget"/></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="saveOrUpdate*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- =========================================== END SERVICE SUPPORT =========================================== -->
+
+    <!-- ======================================= BEGIN URL MAPPING DEFINITION ====================================== -->
+    <bean id="loginUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/login.jspa">
+                    <ref local="loginFormController"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="securityInterceptor"/>
+                <ref bean="openSessionInViewInterceptor"/>
+                <ref bean="localeChangeInterceptor"/>
+                <ref bean="themeChangeInterceptor"/>
+            </list>
+        </property>
+        <property name="urlMap">
+            <map>
+                <entry key="/logout.jspa"><ref local="logoutController"/></entry>
+                <entry key="/menu.jspa"><ref local="menuController"/></entry>
+
+                <entry key="/list_system_locale.jspa"><ref local="systemLocaleFormController"/></entry>
+                <entry key="/add_system_locale.jspa"><ref local="manageSystemLocaleFormController"/></entry>
+                <entry key="/edit_system_locale.jspa"><ref local="manageSystemLocaleFormController"/></entry>
+                <entry key="/delete_system_locale.jspa"><ref local="systemLocaleFormController"/></entry>
+
+                <entry key="/list_title.jspa"><ref local="titleFormController"/></entry>
+                <entry key="/add_title.jspa"><ref local="manageTitleFormController"/></entry>
+                <entry key="/edit_title.jspa"><ref local="manageTitleFormController"/></entry>
+                <entry key="/delete_title.jspa"><ref local="titleFormController"/></entry>
+
+                <entry key="/list_academic_title.jspa"><ref local="academicTitleFormController"/></entry>
+                <entry key="/add_academic_title.jspa"><ref local="manageAcademicTitleFormController"/></entry>
+                <entry key="/edit_academic_title.jspa"><ref local="manageAcademicTitleFormController"/></entry>
+                <entry key="/delete_academic_title.jspa"><ref local="academicTitleFormController"/></entry>
+
+                <entry key="/list_country.jspa"><ref local="countryFormController"/></entry>
+                <entry key="/add_country.jspa"><ref local="manageCountryFormController"/></entry>
+                <entry key="/edit_country.jspa"><ref local="manageCountryFormController"/></entry>
+                <entry key="/delete_country.jspa"><ref local="countryFormController"/></entry>
+
+                <entry key="/list_county.jspa"><ref local="countyFormController"/></entry>
+                <entry key="/add_county.jspa"><ref local="manageCountyFormController"/></entry>
+                <entry key="/edit_county.jspa"><ref local="manageCountyFormController"/></entry>
+                <entry key="/delete_county.jspa"><ref local="countyFormController"/></entry>
+
+                <entry key="/list_customer.jspa"><ref local="customerFormController"/></entry>
+                <entry key="/add_customer.jspa"><ref local="manageCustomerFormController"/></entry>
+                <entry key="/edit_customer.jspa"><ref local="manageCustomerFormController"/></entry>
+                <entry key="/delete_customer.jspa"><ref local="customerFormController"/></entry>
+            </map>
+        </property>
+    </bean>
+    <!-- ======================================== END URL MAPPING DEFINITION ======================================= -->
+
+    <!-- ========================================== BEGIN CONTROLLER SETUP ========================================= -->
+    <bean id="loginFormController" class="ebooking.module.base.form.LoginForm">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="formView"><value>login</value></property>
+        <property name="successView"><value>frameset</value></property>
+    </bean>
+
+    <bean id="logoutController" class="ebooking.module.base.controller.LogoutController"/>
+
+    <bean id="menuController" class="ebooking.module.base.controller.MenuController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>menu</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.customer.CustomerCommand</value></property>
+        <property name="validator"><ref bean="validatorAdpater"/></property>
+        <property name="formView"><value>menu</value></property>
+        <property name="successView"><value>menu</value></property>
+    </bean>
+
+    <bean id="manageSystemLocaleFormController" class="ebooking.module.base.controller.ManageSystemLocaleController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>systemLocale</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.system.SystemLocaleCommand</value></property>
+        <!-- <property name="validator"><ref bean="validatorAdpater"/></property> -->
+        <property name="formView"><value>system_locale_manage</value></property>
+        <property name="successView"><value>system_locale_list</value></property>
+    </bean>
+
+    <bean id="systemLocaleFormController" class="ebooking.module.base.controller.SystemLocaleController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/></property>
+        <property name="baseService"><ref local="baseService"/></property>
+    </bean>
+
+    <bean id="manageTitleFormController" class="ebooking.module.base.controller.ManageTitleController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>title</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.system.TitleCommand</value></property>
+        <!-- <property name="validator"><ref bean="validatorAdpater"/></property> -->
+        <property name="formView"><value>title_manage</value></property>
+        <property name="successView"><value>title_list</value></property>
+    </bean>
+
+    <bean id="titleFormController" class="ebooking.module.base.controller.TitleController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/></property>
+        <property name="baseService"><ref local="baseService"/></property>
+    </bean>
+
+    <bean id="manageAcademicTitleFormController" class="ebooking.module.base.controller.ManageAcademicTitleController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>academicTitle</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.system.AcademicTitleCommand</value></property>
+        <!-- <property name="validator"><ref bean="validatorAdpater"/></property> -->
+        <property name="formView"><value>academic_title_manage</value></property>
+        <property name="successView"><value>academic_title_list</value></property>
+    </bean>
+
+    <bean id="academicTitleFormController" class="ebooking.module.base.controller.AcademicTitleController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/></property>
+        <property name="baseService"><ref local="baseService"/></property>
+    </bean>
+
+    <bean id="manageCountryFormController" class="ebooking.module.base.controller.ManageCountryController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>country</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.system.CountryCommand</value></property>
+        <!-- <property name="validator"><ref bean="validatorAdpater"/></property> -->
+        <property name="formView"><value>country_manage</value></property>
+        <property name="successView"><value>country_list</value></property>
+    </bean>
+
+    <bean id="countryFormController" class="ebooking.module.base.controller.CountryController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/></property>
+        <property name="baseService"><ref local="baseService"/></property>
+    </bean>
+
+    <bean id="manageCountyFormController" class="ebooking.module.base.controller.ManageCountyController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>county</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.system.CountyCommand</value></property>
+        <!-- <property name="validator"><ref bean="validatorAdpater"/></property> -->
+        <property name="formView"><value>county_manage</value></property>
+        <property name="successView"><value>county_list</value></property>
+    </bean>
+
+    <bean id="countyFormController" class="ebooking.module.base.controller.CountyController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/></property>
+        <property name="baseService"><ref local="baseService"/></property>
+    </bean>
+
+    <bean id="manageCustomerFormController" class="ebooking.module.base.controller.ManageCustomerController">
+        <property name="baseService"><ref local="baseService"/></property>
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>customer</value></property>
+        <property name="commandClass"><value>ebooking.module.base.controller.command.customer.CustomerCommand</value></property>
+        <property name="validator"><ref bean="validatorAdpater"/></property>
+        <property name="formView"><value>customer_manage</value></property>
+        <property name="successView"><value>customer_list</value></property>
+    </bean>
+
+    <bean id="customerFormController" class="ebooking.module.base.controller.CustomerController">
+        <property name="methodNameResolver"><ref local="methodNameResolver"/>
+        </property><property name="baseService"><ref local="baseService"/></property>
+    </bean>
+    <!-- =========================================== END CONTROLLER SETUP ========================================== -->
+
+    <!-- ======================================= BEGIN METHOD NAME RESOLVER ======================================== -->
+    <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/list_system_locale.jspa">listSystemLocalesForm</prop>
+                <prop key="/delete_system_locale.jspa">deleteSystemLocaleForm</prop>
+
+                <prop key="/list_title.jspa">listTitlesForm</prop>
+                <prop key="/delete_title.jspa">deleteTitleForm</prop>
+
+                <prop key="/list_academic_title.jspa">listAcademicTitlesForm</prop>
+                <prop key="/delete_academic_title.jspa">deleteAcademicTitleForm</prop>
+
+                <prop key="/list_country.jspa">listCountriesForm</prop>
+                <prop key="/delete_country.jspa">deleteCountryForm</prop>
+
+                <prop key="/list_county.jspa">listCountiesForm</prop>
+                <prop key="/delete_county.jspa">deleteCountyForm</prop>
+
+                <prop key="/list_customer.jspa">listCustomersForm</prop>
+                <prop key="/delete_customer.jspa">deleteCustomerForm</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- ========================================= END METHOD NAME RESOLVER ======================================== -->
+
+    <!-- ====================================== BEGIN VIEW RESOLVER DEFINITION ===================================== -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/WEB-INF/module/base/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+    <!-- ======================================= END VIEW RESOLVER DEFINITION ====================================== -->
+
+    <!-- ======================================= BEGIN LISTENERS DEFINITION ======================================== -->
+    <bean id="loginListener" class="ebooking.module.base.event.LoginListener">
+        <!--
+        <property name="mailSender"><ref bean="mailSender"/></property>
+        -->
+        <property name="baseService"><ref local="baseService"/></property>
+    </bean>
+    <!-- ======================================== END LISTENERS DEFINITION ========================================= -->
+
+</beans>
