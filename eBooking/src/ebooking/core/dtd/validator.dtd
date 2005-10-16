@@ -1,0 +1,39 @@
+<!--
+    VALIDATORS ELEMENT DESCRIPTION
+
+    The validator dtd defines all known validators
+    used in an application. A validator element has the id and the class
+    of the validator.
+
+    Example:
+        <validators>
+            <validator id="required" class="wilken.openshop.validation.validator.RequiredValidator"/>
+            .
+            .
+            .
+        </validators>
+ -->
+<!ELEMENT validators (validator+)>
+
+<!--
+    VALIDATOR ELEMENT DESCRIPTION
+
+    The validator element contains the attributes id and class.
+
+    Example:
+        <validator id="required" class="wilken.openshop.validation.validator.RequiredValidator"/>
+
+        The id identifies the validator and the class attribute containing the classpath to
+        the validator. All attributes are required.
+ -->
+<!ELEMENT validator EMPTY>
+
+<!--
+    VALIDATOR ATTRIBUTES DESCRIPTION
+
+    Attributes of a validator element. See at VALIDATOR ELEMENT DESCRIPTION.
+-->
+<!ATTLIST validator
+id      ID      #REQUIRED
+class   CDATA   #REQUIRED
+>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: MenuItemAuthorization.hbm.xml,v 1.1 2005/10/16 18:41:08 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+
+    <class name="ebooking.core.menu.MenuItemAuthorization" table="CORE_MENU_ITEM_AUTHORIZATION">
+
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="userRole" type="string">
+            <column name="USER_ROLE"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>
+

@@ -1,0 +1,142 @@
+<!--
+    VALIDATION																												-RULES ELEMENT DESCRIPTION
+
+    This dtd defines validation-rules for an application.
+    The element validation-rules inherits rule elements.
+
+    Example:
+        <validation-rules>
+            <rule beanCommand="LoginCommand">
+                ...
+            </rule>
+            .
+            .
+            .
+        </validation-rules>
+-->
+
+<!ELEMENT validation-rules (rule)+>
+
+<!--
+    RULE ELEMENT DESCRIPTION
+
+    A rule is identified by a bean command name described in the attribute
+    beanCommand. The beanCommand is the class name of the bean.
+    The ValidatorAdapter identifies a rule for a bean command with
+    the bean command name.
+
+    Example:
+        <rule beanCommand="LoginCommand">
+            <field>
+                ...
+            </field>
+            .
+            .
+            .
+        </rule>
+-->
+<!ELEMENT rule (field)+>
+<!--
+    RULE ATTRIBUTES DESCRIPTION
+
+    Attributes of a rule element. See at RULE ELEMENT DESCRIPTION.
+-->
+<!ATTLIST rule
+beanCommand ID    #REQUIRED
+>
+
+<!--
+    FIELD ELEMENT DESCRIPTION
+
+    Only for clearness. To understand the dependency between a field and a property.
+    You always have to define a property element built-in a field element.
+
+    !!! DUMMY ELEMENT !!! KEEP IN MIND
+-->
+<!ELEMENT field (property+)>
+
+<!--
+    PROPERTY ELEMENT DESCRIPTION
+
+    A property element containing the required attribute id that identifies the property
+    (field of a bean -> getter method) and at least one validator element.
+
+    Example:
+        <property id="username">
+            <validator  id="required"
+                        msg-code="username.required"
+                        msg-default="The username is required" />
+            .
+            .
+            .
+        </property>
+-->
+<!ELEMENT property (validator+)>
+<!--
+    PROPERTY ATTRIBUTES DESCRIPTION
+
+    Attributes of a property element. See at PROPERTY ELEMENT DESCRIPTION.
+-->
+<!ATTLIST property
+id          CDATA #REQUIRED
+>
+
+<!--
+    VALIDATOR ELEMENT DESCRIPTION
+
+    The validator element contains the required attributes id, msg-code and msg-default.
+    The implied attributes are extensible attributes that the ValidationXMLParser
+    appriciate as XAttribute.
+
+    Example:
+        <validator  id="required"
+                        msg-code="username.required"
+                        msg-default="The username is required" />
+
+    If you want to use the extensible attributes the validator must implement the
+    setter methods which labeled equal as the attributes name.
+
+    Example:
+        <validator  id="string"
+                        msg-code="username.is.to.short"
+                        msg-default="The username is to short"
+                        minLength="6" />
+
+    Now the validator that id matches with the id in the validator xml must implement a
+    method named setMinLength(String minLength).
+
+    Also the validator element allows you to use the expression element (only working with
+    ExpressionValidator). This element contains OGNL expressions -> see http://www.ognl.org.
+-->
+<!ELEMENT validator (expression?)>
+<!--
+    VALIDATOR ATTRIBUTES DESCRIPTION
+
+    Attributes of a validator element. See at VALIDATOR ELEMENT DESCRIPTION.
+-->
+<!ATTLIST validator
+id          CDATA #REQUIRED
+msg-code    CDATA #REQUIRED
+msg-default CDATA #REQUIRED
+length      CDATA #IMPLIED
+minLength   CDATA #IMPLIED
+maxLength   CDATA #IMPLIED
+min         CDATA #IMPLIED
+max         CDATA #IMPLIED
+subString   CDATA #IMPLIED
+useRegex    CDATA #IMPLIED
+regex       CDATA #IMPLIED
+pattern     CDATA #IMPLIED
+before      CDATA #IMPLIED
+after       CDATA #IMPLIED
+>
+
+<!--
+    EXPRESSION ELEMENT DESCRIPTION
+
+    This element allows you to use OGNL expressions. With OGNL you can define expressions
+    like <![CDATA[email.equals("rro@wilken.de")]]>. The statement tests if the field email
+    (the email field is implemented in the actual bean command) equals the string of this
+    statement.
+-->
+<!ELEMENT expression (PCDATA)>

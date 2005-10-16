@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+Author: Roman R&auml;dle
+Version: $Id: MenuItem.hbm.xml,v 1.1 2005/10/16 18:41:08 raedler Exp $
+Since: DAPS INTRA 1.0
+ -->
+
+<hibernate-mapping>
+
+    <class name="ebooking.core.menu.MenuItem" table="CORE_MENU_ITEM">
+
+        <id name="id" type="long">
+            <column name="ID" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="index" type="integer">
+            <column name="MENU_ITEM_INDEX"/>
+        </property>
+
+        <property name="key" type="string">
+            <column name="MENU_ITEM_KEY" length="50"/>
+        </property>
+
+        <property name="imagePath" type="string">
+            <column name="IMAGE_PATH"/>
+        </property>
+
+        <property name="link" type="string">
+            <column name="LINK"/>
+        </property>
+
+        <property name="target" type="string">
+            <column name="TARGET"/>
+        </property>
+
+        <property name="tooltip" type="string">
+            <column name="TOOLTIP"/>
+        </property>
+
+        <many-to-one name="parent" class="ebooking.core.menu.MenuItem" column="PARENT" property-ref="key"/>
+
+        <set name="menuItems" table="CORE_MENU_ITEM" lazy="false" inverse="true" sort="ebooking.core.hibernate.sort.IndexComparator">
+            <key column="PARENT" not-null="true" property-ref="key"/>
+            <one-to-many class="ebooking.core.menu.MenuItem"/>
+        </set>
+
+        <set name="menuItemAuthorizations" table="CORE_MENU_ITEM_AUTHORIZATION" lazy="false">
+            <key column="MENU_ITEM_KEY" not-null="true" property-ref="key"/>
+            <one-to-many class="ebooking.core.menu.MenuItemAuthorization"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>
